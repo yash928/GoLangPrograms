@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"io"
 	"net/http"
-	"os"
 )
 
 type logWriter struct{}
@@ -19,8 +18,7 @@ func (logWriter) Write(b []byte) (int, error) {
 func main() {
 	res, err := http.Get("https://google.com")
 	if err != nil {
-		fmt.Println("Error:", err)
-		os.Exit(1)
+		panic(err)
 	}
 	lw := logWriter{}
 	io.Copy(lw, res.Body)
